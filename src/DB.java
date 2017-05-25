@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -54,8 +52,8 @@ public class DB extends HttpServlet {
 			String FirstName = request.getParameter("fname");
 			String LastName = request.getParameter("lname");
 			
-			Student confirm = test.addStudent(StudentID, FirstName, LastName);
-			
+			Student newStudent = test.addStudent(StudentID, FirstName, LastName);
+			String confirm = "Student " + newStudent.getFirstName() + " " + newStudent.getLastName() + " (" + newStudent.getStudentID() + ") created!";
 			request.setAttribute("studentInfo", confirm);
 			request.getRequestDispatcher("/WEB-INF/results.jsp").forward(request, response);
 		
