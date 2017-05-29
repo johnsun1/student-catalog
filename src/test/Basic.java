@@ -19,6 +19,7 @@ public class Basic extends HttpServlet {
 	private WebResponse response;
 	private WebForm form;
 	
+	
 	public void testCreate() {
 		try {
 			response = wc.getResponse("http://localhost:8080/student-catalog/create.html");
@@ -46,7 +47,7 @@ public class Basic extends HttpServlet {
 			form.setParameter("StudentID", "5832749");
 			form.submit();
 			
-			assertTrue(wc.getCurrentPage().getText().contains("<p>[Data Structures and Algorithms, Programming Languages, 5832749, John Sun]</p>"));
+			assertTrue(wc.getCurrentPage().getText().contains("<p>[Data Structures and Algorithms, Programming Languages, 5832749, Ben Franklin]</p>"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

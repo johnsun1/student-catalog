@@ -80,6 +80,25 @@ public class DB extends HttpServlet {
 			String text = "Student record deleted for student " + FirstName + " " + LastName + "(" + StudentID + ")";
 			request.setAttribute("studentInfo", text);
 			request.getRequestDispatcher("/WEB-INF/results.jsp").forward(request, response);
+		//Register for class
+		} else if (request.getParameter("type").equals("register")) {
+			Integer StudentID = Integer.parseInt(request.getParameter("StudentID"));
+			String classID = request.getParameter("classID");
+			
+			test.addCourse(StudentID, classID);
+			
+			String text = "Student enrolled in " + classID + " !";
+			request.setAttribute("studentInfo", text);
+			request.getRequestDispatcher("/WEB-INF/results.jsp").forward(request, response);			
+		} else if (request.getParameter("type").equals("drop")) {
+			Integer StudentID = Integer.parseInt(request.getParameter("StudentID"));
+			String classID = request.getParameter("classID");
+			
+			test.deleteCourse(StudentID, classID);
+			
+			String text = "Student dropped from " + classID + " !";
+			request.setAttribute("studentInfo", text);
+			request.getRequestDispatcher("/WEB-INF/results.jsp").forward(request, response);
 		}
 		
 	}

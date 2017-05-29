@@ -18,9 +18,9 @@ public class QueryDB {
 	}
 	
 	/**
-	 * Populate DB with test sales data
+	 * Populate DB with test data
 	 */
-	public void populateDB(ArrayList<Student> stu, ArrayList<Course> cou) {
+	public void populateDB(ArrayList<Student> stu, ArrayList<Course> cou, ArrayList<Registrar> reg) {
 		//Create a new session and save data to the DB
 		s = sf.openSession();
 		s.beginTransaction();
@@ -32,6 +32,10 @@ public class QueryDB {
 		
 		for (Course i : cou) {
 			s.save(i);
+		}
+		
+		for (Registrar r : reg) {
+			s.save(r);
 		}
 
 		s.getTransaction().commit();
@@ -74,16 +78,13 @@ public class QueryDB {
 		
 		Student student = (Student) s.get(Student.class, i);
 		
-		String query = String.format("SELECT CourseName FROM Course WHERE EnrolledStudent = %d", i);
-		ArrayList<String> courseResults = (ArrayList<String>) s.createQuery(query).getResultList();
+		String query = String.format("SELECT CID FROM Registrar WHERE SID = %d", i);
 		
-		//Add results to array
-		courseResults.add(student.getStudentID().toString());
-		courseResults.add(student.getFirstName() + " " + student.getLastName());
+		ArrayList<String> courseResult = (ArrayList<String>) s.createQuery(query).getResultList();
 		
 		s.close();
 		
-		return courseResults;
+		return courseResult;
 	}
 	
 	/**
@@ -100,7 +101,6 @@ public class QueryDB {
 		s.createQuery(query).executeUpdate();
 
 		s.close();
-		
 	}
 	
 	/**
@@ -108,12 +108,25 @@ public class QueryDB {
 	 * @param id the student ID whose information we're updating
 	 * @param courseName the name of the course we're deleting
 	 */
-	public void deleteCourse(Integer id, String courseName) {
+	public void deleteCourse(Integer id, String courseID) {
 		s = sf.openSession();
 		s.beginTransaction();
 		
-		String query = String.format("DELETE FROM Course WHERE EnrolledStudent=%d AND CourseName='%s'",id, courseName);
+		String query = String.format("DELETE FROM Registrar WHERE SID = %d AND CID = '%s'", id, courseID);
 		s.createQuery(query).executeUpdate();
+		
+		s.close();
+	}
+	
+	public void addCourse(Integer id, String courseID) {
+		s = sf.openSession();
+		s.beginTransaction();
+		
+		Registrar newReg = new Registrar();
+		newReg.setCID(courseID);
+		newReg.setSID(id);
+		s.save(newReg);
+		s.getTransaction().commit();
 		
 		s.close();
 	}

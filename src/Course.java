@@ -3,17 +3,17 @@ import javax.persistence.Id;
 
 @Entity
 public class Course {
-	@Id
-	private Integer CourseID;
-	private String CourseName;
-	private Integer EnrolledStudent;
 	
-	public Integer getCourseID() {
+	@Id
+	private String CourseID;
+	private String CourseName;
+	
+	public String getCourseID() {
 		return CourseID;
 	}
 	
-	public void setCourseID(Integer i) {
-		CourseID = i;
+	public void setCourseID(String s) {
+		CourseID = s;
 	}
 	
 	public String getCourseName() {
@@ -22,13 +22,5 @@ public class Course {
 	
 	public void setCourseName(String s) {
 		CourseName = s;
-	}
-	
-	public Integer getEnrolledStudent() {
-		return EnrolledStudent;
-	}
-	
-	public void setEnrolledStudent(Integer i) {
-		EnrolledStudent = i;
 	}
 }
